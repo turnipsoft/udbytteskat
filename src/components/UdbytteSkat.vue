@@ -67,14 +67,14 @@
                   </div>
                   <div class="col-3">
                     <div class="form-group">
-                      <label for="andelInput">Ejers andel</label>
+                      <label for="andelInput">Andel</label>
                       <input type="text" v-model="andel" class="form-control" id="andelInput" aria-describedby="andelHelp" placeholder="Andel">
                       <small id="andelHelp" class="form-text text-muted">Ejerens andel i procent</small>
                     </div>
                   </div>
                   <div class="col-3">
                     <div class="form-group">
-                      <label for="giftInput">Ægtefælde</label>
+                      <label for="giftInput">Gift</label>
                       <input type="checkbox" v-model="gift" class="form-control" id="giftInput" aria-describedby="giftHelp">
                       <small id="giftHelp" class="form-text text-muted">Er ejeren gift</small>
                     </div>
@@ -222,7 +222,7 @@
         </div>
         
       </div>
-      <div class="intro">
+      <div class="end">
         <div class="row">
           <div class="col">
             <form v-on:submit="resetForm">
@@ -327,8 +327,11 @@ export default class UdbytteSkat extends Vue {
     const ejer: Ejer = new Ejer(this.ejer, andel, this.gift, udbytte);
     this.ejere.push(ejer);
     this.reset();
-    let elem = <HTMLInputElement> this.$refs.navnInput;
-    elem.focus();
+    const mq = window.matchMedia( "(min-width: 1000px)" );
+    if (mq.matches) {
+      let elem = <HTMLInputElement> this.$refs.navnInput;
+      elem.focus();
+    }
   }
 
   beregnUdbytte(udbytte: Number, ejerandel: Number, gift: boolean): Udbytte {
@@ -455,16 +458,24 @@ h6 {
   };
 }
 
+@media screen and (max-width: 999px) {
+  .card {
+    margin-left: 1px;
+    margin-right: 1px;
+  };
+}
+
+@media screen and (max-width: 999px) {
+  .end {
+    margin-left: 1px;
+    margin-right: 1px;
+  };
+}
+
 @media screen and (min-width: 1000px) {
   #showDesktop {
     visibility: visible;
   };
-  #showMobile {
-    visibility: hidden;
-    height: 0;
-    margin: 0px 0px 0px 0px;
-    padding: 0px 0px 0px 0px;
-  }
 }
 
 @media screen and (min-width: 1000px) {
