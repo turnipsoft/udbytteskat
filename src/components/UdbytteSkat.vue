@@ -89,7 +89,7 @@
             </div>
             <div class="row">
               <div class="col-12 pull right">
-                <button type="submit" class="btn btn-primary">Tilføj ejer</button>
+                <button type="submit" class="btn btn-primary">Tilføj ejer og beregn</button>
               </div>
             </div>
             
@@ -98,8 +98,61 @@
           </div>
         </div>
 
-        <div class="card tablecard" v-if="ejere.length>0">
+        <div class="card tablecard" id="showMobile" v-if="ejere.length>0">
           <div class="card-block resizable-block">
+            <h5>Ejere</h5>
+            <div v-for="(ejer,index) in ejere" v-bind:key="ejer.navn" v-on:click="visEjerBeregning(index)" class="mouseover">
+              <hr/>
+              <div class="row">
+                <div class="col">
+                  {{ejer.navn}} ejer {{ejer.andel}} % 
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-5">
+                  Andel  
+                </div>
+                <div class="col-7">
+                  {{ejer.udbytte.andelBeloeb.toLocaleString('da-DK')}},-
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-5">
+                  Udbytteskat  
+                </div>
+                <div class="col-7">
+                  {{ejer.udbytte.virksomhedSkat.toLocaleString('da-DK')}},-
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-5">
+                  Personlig skat  
+                </div>
+                <div class="col-7">
+                  {{ejer.udbytte.personligSkat.toLocaleString('da-DK')}},-
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-5">
+                  Udbetalt  
+                </div>
+                <div class="col-7">
+                  {{ejer.udbytte.udbetaltEfterSkat.toLocaleString('da-DK')}},-
+                </div>
+              </div>
+              <br/>
+              <div class="row">
+                <div class="col-6">
+                  <input type="button" class="btn btn-primary" v-on:click="visEjerBeregning(index)" value="Se detaljeret beregning" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card tablecard" id="showDesktop" v-if="ejere.length>0">
+          <div class="card-block resizable-block">
+            <h5>Ejere</h5>
             <table class="table table-striped">
               <thead>
                 <tr>
@@ -391,5 +444,47 @@ h6 {
 .btn-primary {
   background-color: #434461;
   border-color: #434461;
+}
+
+@media screen and (max-width: 999px) {
+  #showDesktop {
+    visibility: hidden;
+    height: 0;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+  };
+}
+
+@media screen and (min-width: 1000px) {
+  #showDesktop {
+    visibility: visible;
+  };
+  #showMobile {
+    visibility: hidden;
+    height: 0;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  #showMobile {
+    visibility: hidden;
+    height: 0;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .container {
+    font-size: 14px
+  };
+}
+
+@media screen and (max-width: 900px) {
+  ::-webkit-input-placeholder {
+    font-size: 14px!important;
+  }
 }
 </style>
