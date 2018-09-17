@@ -31,7 +31,7 @@
               <div class="form-group">
                 <h5 class="card-title">Udbytte</h5>
                 <label for="udbytteInput">Indtast Udbytte for virksomheden</label>
-                  <input type="number" autofocus ref="udbytteInput" v-model="udbytte" class="form-control" id="udbytteInput" aria-describedby="udbytteHelp" placeholder="Indtast udbytte">
+                  <input v-on:keyup="opdaterUdbytte" type="text" autofocus ref="udbytteInput" v-model="udbytte" class="form-control" id="udbytteInput" aria-describedby="udbytteHelp" placeholder="Indtast udbytte">
                   <small id="udbytteHelp" class="form-text text-muted">Indtast det fulde udbytte der skal udloddes her</small>
               </div>
             </div>
@@ -105,7 +105,7 @@
               <hr/>
               <div class="row">
                 <div class="col">
-                  {{ejer.navn}} ejer {{ejer.andel}} % 
+                  {{ejer.navn}} ejer {{ejer.andel.toLocaleString('da-DK')}} % 
                 </div>
               </div>
               <div class="row">
@@ -169,7 +169,7 @@
               <tbody>
                 <tr v-for="(ejer, index) in ejere" v-bind:key="ejer.navn" v-on:click="visEjerBeregning(index)" class="mouseover">
                   <td>{{ejer.navn}}</td>
-                  <td>{{ejer.andel}} % </td>
+                  <td>{{ejer.andel.toLocaleString('da-DK')}} % </td>
                   <td>{{ejer.giftString()}}</td>
                   <td>{{ejer.udbytte.andelBeloeb.toLocaleString('da-DK')}}</td>
                   <td>{{ejer.udbytte.virksomhedSkat.toLocaleString('da-DK')}}</td>
@@ -185,7 +185,7 @@
         <div class="card udregningcard" v-if="vistEjer">
           <div class="card-block resizable-block">
             <h5 class="card-title">Beregning og vejledning for ejeren {{vistEjer.navn}}</h5>
-            <p>Virksomheden udlodder ialt {{udbytteNumber.toLocaleString('da-DK')}},- i udbytte og <b>{{vistEjer.navn}}</b> ejer {{vistEjer.andel}} % af firmaet, andelen af udbyttet er derfor:</p>
+            <p>Virksomheden udlodder ialt {{udbytteNumber.toLocaleString('da-DK')}},- i udbytte og <b>{{vistEjer.navn}}</b> ejer {{vistEjer.andel.toLocaleString('da-DK')}} % af firmaet, andelen af udbyttet er derfor:</p>
             <p><b>{{vistEjer.udbytte.andelBeloeb.toLocaleString('da-DK')}},-</b></p>
             <br/>
             <hr/>
@@ -261,10 +261,19 @@ export default class UdbytteSkat extends Vue {
   ejere: Ejer[] = [];
   //@Prop() private msg!: string;
 
+  opdaterUdbytte() {
+    const s: string = this.udbytte.replace(/\./g, '');
+    const n: number = Number.parseFloat(s);
+    if (n) {
+      this.udbytte = n.toLocaleString('da-DK');
+    }
+  }
+
   submitUdbytte(e: any) {
     e.preventDefault();
     this.errorMessage = '';
-    this.udbytteNumber = Number.parseFloat(this.udbytte);
+    const s: string = this.udbytte.replace(/\./g, '');
+    this.udbytteNumber = Number.parseFloat(s);
 
     if (isNaN(this.udbytteNumber)) {
       this.errorMessage = 'Udbyttet skal være et tal';
@@ -322,7 +331,7 @@ export default class UdbytteSkat extends Vue {
     if (this.errorMessage) {
       return;
     }
-    const andel: Number = Number.parseFloat(this.andel);
+    const andel: Number = Number.parseFloat(this.andel.replace(',','.'));
     const udbytte: Udbytte = this.beregnUdbytte(this.udbytteNumber, andel, this.gift)
     const ejer: Ejer = new Ejer(this.ejer, andel, this.gift, udbytte);
     this.ejere.push(ejer);
@@ -416,7 +425,7 @@ a {
 }
 
 .aligned {
-  margin-left: 10px;
+  margin-left: 10%;
 }
 
 .mouseover {
@@ -494,6 +503,12 @@ h6 {
 }
 
 @media screen and (max-width: 900px) {
+  .aligned {
+    margin-left: 10px;
+  }
+}
+
+@media screen and (max-width: 999px) {
   ::-webkit-input-placeholder {
     font-size: 14px!important;
   }
