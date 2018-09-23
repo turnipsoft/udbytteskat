@@ -83,7 +83,7 @@
               </div>
             <div class="row">
               <div class="col">
-                <p>Hvis ejeren er gift kan man udnytte æftefældens fradrag, såfremt ægtefælden ikke allerede har udnyttet fradraget</p>
+                <p>Hvis ejeren er gift kan man udnytte æftefældens fradrag, såfremt ægtefællen ikke allerede har udnyttet fradraget</p>
                 <p>Fradraget udgør i {{aar}} : {{fradrag.toLocaleString('da-DK')}},- pr. person</p>
               </div>
             </div>
@@ -201,7 +201,7 @@
             <br/>
             <hr/>
             <h6><v-icon name="user-tie"/>&nbsp; Personlig Skat</h6>
-            <p>Der er et fradrag på <b>{{vistEjer.udbytte.fradragIalt.toLocaleString('da-DK')}},-</b> da ejeren <span v-if="!vistEjer.gift">ikke</span> udnytter ægtefældens fradrag</p>
+            <p>Der er et fradrag på <b>{{vistEjer.udbytte.fradragIalt.toLocaleString('da-DK')}},-</b> da ejeren <span v-if="!vistEjer.gift">ikke</span> udnytter ægtefællens fradrag</p>
             <p>Grundlaget for den personlige beskatning er derfor:</p>
             <p><b>{{vistEjer.udbytte.grundlagForBeskatning.toLocaleString('da-DK')}},-</b> &nbsp; <small class="muted">( {{vistEjer.udbytte.andelBeloeb.toLocaleString('da-DK')}} - {{vistEjer.udbytte.fradragIalt.toLocaleString('da-DK')}} )</small> </p>
             <p>Ejeren skal betale {{skatteprocent}} % af beløbet der overstiger fradraget, men da virksomheden har betalt de første {{udbytteskatteprocent}} % skal 
