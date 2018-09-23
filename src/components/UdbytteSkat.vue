@@ -83,7 +83,7 @@
               </div>
             <div class="row">
               <div class="col">
-                <p>Hvis ejeren er gift kan man udnytte æftefældens fradrag, såfremt ægtefællen ikke allerede har udnyttet fradraget</p>
+                <p>Hvis ejeren er gift kan man udnytte ægtefællens fradrag, såfremt ægtefællen ikke allerede har udnyttet fradraget</p>
                 <p>Fradraget udgør i {{aar}} : {{fradrag.toLocaleString('da-DK')}},- pr. person</p>
               </div>
             </div>
