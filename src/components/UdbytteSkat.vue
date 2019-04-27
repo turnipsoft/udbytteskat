@@ -248,8 +248,8 @@ export default class UdbytteSkat extends Vue {
   udbytte: string = ''; 
   udbytteNumber: number = 0;
   udbytteIndtastet: boolean = false;
-  aar: Number = 2018;
-  fradrag: Number = 52900;
+  aar: Number = 2019;
+  fradrag: Number = 54000;
   ejer: string = '';
   andel: string = '';
   gift: boolean = false;
